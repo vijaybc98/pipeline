@@ -1,6 +1,7 @@
 pipeline {
 	agent none
 	stages {
+	 parallel {
              stage('build') {
 	         agent { label 'master' }
 		 steps { 
@@ -13,7 +14,6 @@ pipeline {
 		       }
 		}
  	     stage('deploy') {
-	      parallel {
 	         agent { label 'slave1' }
 	         steps {
                      echo "this is a deploy stage"
