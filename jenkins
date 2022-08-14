@@ -25,7 +25,7 @@ pipeline {
 	         agent { label 'slave1' }
 	         steps {
                      echo "this is a deploy stage"
-		     echo "$BRANCH $GIT-REPO"
+		     echo "$BRANCH"
 		     echo "$BUILD-ENV"
 	          }
 	      }
