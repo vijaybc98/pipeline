@@ -20,12 +20,11 @@ pipeline {
 	               }
 	         }
              stage('testing') {
-	          agent any
+	          agent { label 'slave1' }
                   steps {
                        sh 'echo "this is a testing stage"'
                        }
-                 }
+                  }
                }
-	     
-	    }
+	     }
 	  }
