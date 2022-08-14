@@ -3,17 +3,17 @@ pipeline {
 	
 	environment {
 	 BRANCH = 'main'
-	 GIT-REPO = 'https://github.com/vijaybc98/c-project.git'
+	 GIT_REPO = 'https://github.com/vijaybc98/c-project.git'
 	}
 	
 	stages {
             stage('build') {
 		 agent { label 'master' }
 		  environment {
-                   BUILD-ENV = 'only_for_build_stage'
+                   BUILD_ENV = 'only_for_build_stage'
                   }
 		 steps { 
-		      git branch: $BRANCH , url: $GIT-REPO
+		      git branch: $BRANCH , url: $GIT_REPO
 		      sh '''
 		       #!/bin/bash
 		        pwd 
@@ -26,7 +26,6 @@ pipeline {
 	         steps {
                      echo "this is a deploy stage"
 		     echo "$BRANCH"
-		     echo "$BUILD-ENV"
 	          }
 	      }
           }
