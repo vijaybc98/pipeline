@@ -6,18 +6,12 @@ pipeline {
                    stage('build') {
 		    agent { label 'master' }
 		    steps { 
-		      sh '''
-		         #!/bin/bash
-		         pwd
-		         ls
-		         echo " this is build stage "
-		        '''
+		      git branch: 'main', url: 'https://github.com/vijaybc98/c-project.git'
 		       }
 		   }
  	     stage('deploy') {
 	         agent { label 'master' }
 	         steps {
-		   git branch: 'main', url: 'https://github.com/vijaybc98/c-project.git'
                      echo "this is a deploy stage"
 	               }
 	           }
