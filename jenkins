@@ -1,11 +1,10 @@
 pipeline {
-	agent none
+	agent any
 	 stages {
-	 stage('MAIN') {
-	     parallel {
-              stage('build') {
-	         agent { label 'master' }
-		  steps { 
+	    stage('MAIN') {
+	        parallel {
+                   stage('build') {
+		   steps { 
 		     sh '''
 		        #!/bin/bash
 		        pwd
@@ -15,18 +14,16 @@ pipeline {
 		       }
 		   }
  	     stage('deploy') {
-	         agent { label 'master' }
 	         steps {
                      echo "this is a deploy stage"
 	               }
 	          }
              stage('testing') {
-	          agent { label 'slave1' }
                   steps {
                        sh 'echo "this is a testing stage"'
                        }
-                  }
-		  }
-               }
-	    }
+                   }
+		}
+              }
+	   }
 	}
