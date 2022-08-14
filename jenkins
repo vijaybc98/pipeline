@@ -15,7 +15,7 @@ pipeline {
 		       }
 		   }
  	     stage('deploy') {
-	         agent { label 'slave1' }
+	         agent { label 'master' }
 	         steps {
                      echo "this is a deploy stage"
 	               }
