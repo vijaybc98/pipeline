@@ -1,27 +1,38 @@
 pipeline {
 	agent none
-	 stages {
-	    stage('MAIN') {
-	        parallel {
-                   stage('build') {
-		    agent { label 'master' }
-		    steps { 
-		      git branch: 'main', url: 'https://github.com/vijaybc98/c-project.git'
-		       }
-		   }
+	
+	environment {
+	 BRANCH = 'main'
+	 GIT-REPO = 'https://github.com/vijaybc98/c-project.git'
+	}
+	
+	stages {
+            stage('build') {
+		 agent { label 'master' }
+		  environment {
+                   BUILD-ENV = 'only_for_build_stage'
+                  }
+		 steps { 
+		      git branch: $BRANCH, url: $GIT-REPO"
+		      sh '''
+		       #!/bin/bash
+		        pwd 
+			ls
+			'''
+		 }
+            }
  	     stage('deploy') {
-	         agent { label 'master' }
+	         agent { label 'slave1' }
 	         steps {
                      echo "this is a deploy stage"
-	               }
-	           }
-             stage('testing') {
-	          agent { label 'slave1' }
-                  steps {
-                       sh 'echo "this is a testing stage"'
-                       }
-                   }
-		}
-              }
-	   }
-	}
+		     echo "$BRANCH $GIT-REPO"
+		     echo "$BUILD-ENV"
+	          }
+	      }
+          }
+      }
+   
+
+	
+	
+                 
