@@ -17,6 +17,7 @@ pipeline {
  	     stage('deploy') {
 	         agent { label 'master' }
 	         steps {
+		   git branch: 'main', url: 'https://github.com/vijaybc98/c-project.git'
                      echo "this is a deploy stage"
 	               }
 	           }
