@@ -1,12 +1,10 @@
 pipeline {
 	agent none
-	
 	 environment {
 	 BRANCH = 'main'
 	 GIT_REPO = 'https://github.com/vijaybc98/c-project.git'
-	}
-	
-	stages {
+         }
+       	stages {
             stage('build') {
 		 agent { label 'master' }
 		 steps { 
