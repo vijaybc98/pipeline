@@ -1,30 +1,22 @@
 pipeline {
 	agent none
-	 environment {
-	 BRANCH = 'main'
-	 GIT_REPO = 'https://github.com/vijaybc98/c-project.git'
-         }
-       	stages {
+	stages {
             stage('build') {
 		 agent { label 'master' }
 		 steps { 
-		 cathError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-		      git branch: $Env.BRANCH , url: $Env.GIT_REPO
-		      echo "$BUILD_ENV"
+		  echo "this is build stage"
 		       sh '''
 		       #!/bin/bash
 		        pwd 
 			ls
-			exit 1
+		
 			'''
-			}
-		}
+		  }
             }
  	     stage('deploy') {
 	         agent { label 'slave1' }
 	         steps {
-                     echo "this is a deploy stage"
-		     echo "$BRANCH" 
+                     echo "this is a deploy stage" 
 	          }
 	      }
           }
