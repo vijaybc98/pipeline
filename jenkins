@@ -19,7 +19,7 @@ pipeline {
 		        pwd 
 			ls
 			$BRANCH
-			'''
+			''' 
 		 }
             }
  	     stage('deploy') {
@@ -27,7 +27,7 @@ pipeline {
 	         steps {
                      echo "this is a deploy stage"
 		     echo "$BRANCH" 
-		     url: "$GIT_REPO"
+		    sh'url: "$GIT_REPO"'
 	          }
 	      }
           }
