@@ -8,7 +8,7 @@ pipeline {
             stage('build') {
 		 agent { label 'master' }
 		 steps { 
-		      echo "git branch: {$env.BRANCH} , url: {$env.GIT_REPO}"
+		      git branch: $Env.BRANCH , url: $Env.GIT_REPO
 		      echo "$BUILD_ENV"
 		       sh '''
 		       #!/bin/bash
