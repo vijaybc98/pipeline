@@ -18,7 +18,7 @@ pipeline {
 		       #!/bin/bash
 		        pwd 
 			ls
-			$BRANCH
+			$env.BRANCH
 			''' 
 		 }
             }
@@ -28,7 +28,7 @@ pipeline {
                      echo "this is a deploy stage"
 		     echo "$BRANCH" 
 		    sh'''
-		     url: "$GIT_REPO"
+		     url: "$env.GIT_REPO"
 		     '''
 	          }
 	      }
