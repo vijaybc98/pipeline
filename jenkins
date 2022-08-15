@@ -27,7 +27,7 @@ pipeline {
 	         steps {
                      echo "this is a deploy stage"
 		     echo "$BRANCH" 
-		     echo "url: $GIT_REPO"
+		     url: "$GIT_REPO"
 	          }
 	      }
           }
