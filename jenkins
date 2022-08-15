@@ -3,14 +3,16 @@ pipeline {
 	stages {
             stage('build') {
 		 agent { label 'master' }
-		 steps { 
+		 steps {
+		 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 		  echo "this is build stage"
 		       sh '''
 		       #!/bin/bash
 		        pwd 
 			ls
-		
+		        exit 1
 			'''
+			}
 		  }
             }
  	     stage('deploy') {
