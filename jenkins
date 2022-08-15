@@ -8,13 +8,16 @@ pipeline {
             stage('build') {
 		 agent { label 'master' }
 		 steps { 
+		 cathError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 		      git branch: $Env.BRANCH , url: $Env.GIT_REPO
 		      echo "$BUILD_ENV"
 		       sh '''
 		       #!/bin/bash
 		        pwd 
 			ls
-			''' 
+			exit 1
+			'''
+			}
 		}
             }
  	     stage('deploy') {
