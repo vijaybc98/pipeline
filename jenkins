@@ -1,7 +1,7 @@
 pipeline {
 	agent none
 	
-	environment {
+	 environment {
 	 BRANCH = 'main'
 	 GIT_REPO = 'https://github.com/vijaybc98/c-project.git'
 	}
@@ -9,9 +9,6 @@ pipeline {
 	stages {
             stage('build') {
 		 agent { label 'master' }
-		  environment {
-                   BUILD_ENV = 'only_for_build_stage'
-                  }
 		 steps { 
 		      git branch: $env.BRANCH , url: $env.GIT_REPO
 		      echo "$BUILD_ENV"
@@ -20,7 +17,7 @@ pipeline {
 		        pwd 
 			ls
 			''' 
-		 }
+		}
             }
  	     stage('deploy') {
 	         agent { label 'slave1' }
