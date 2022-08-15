@@ -13,7 +13,7 @@ pipeline {
                    BUILD_ENV = 'only_for_build_stage'
                   }
 		 steps { 
-		      git branch: $BRANCH , url: $GIT_REPO
+		      echo "$BUILD_ENV"
 		      sh '''
 		       #!/bin/bash
 		        pwd 
@@ -25,7 +25,8 @@ pipeline {
 	         agent { label 'slave1' }
 	         steps {
                      echo "this is a deploy stage"
-		     echo "$BRANCH"
+		     echo "$BRANCH" 
+		     url: GIT_REPO
 	          }
 	      }
           }
