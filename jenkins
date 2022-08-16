@@ -8,17 +8,15 @@ pipeline {
 		       sh '''
 		        #!/bin/bash
 		        pwd  
-			ls
-		        exit 1
+			ls 
 			'''
 		      }
 		  }
-              }
               stage(BC) {
-	      parallel {
- 	           stage('stage_B') {
+	          parallel {
+ 	             stage('stage_B') {
 	               agent { label 'master' }
-	               when {
+	                   when {
 	                   expression{stage_AResult: 'SUCCESS'}
 	                    }
 		       steps {
