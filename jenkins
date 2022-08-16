@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('BUILD') {
             when {
-                branch 'master'
+                branch 'branch1'
             }
             steps {
                 echo "this is build stage"   
@@ -11,7 +11,7 @@ pipeline {
         }
         stage ('DEPLOY') {
             when {
-                branch 'master'
+                branch 'branch1'
             }
             steps {
                 sh'''
