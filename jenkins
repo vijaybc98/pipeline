@@ -1,51 +1,28 @@
-boolean stageA=true
-pipeline{
+pipeline {
     agent any
-    parameters {
-        choice choices: ['success', 'fail'], description: 'set \'A\' stage status', name: 'stage_A'
-    }
-
-    stages{
-        stage('A'){
-            steps{
-              script{
-                try{
-                  echo 'Stage A is Running'
-                    if(stage_A == 'fail'){
-                      sh 'exit 1'
-                      }else{
-                       sh 'exit 0'
-                    }
-                }catch(Exception e){
-                echo 'Stage (A) success'
-                stageA=false
-               }
-            }
-          }
-        }
-
-        stage('B'){
-              when {
-                  expression {
-                    stageA == true
-                   }
-               }
-            steps{
-                echo 'when stage A is success'
-		echo 'Stage B is running'
-             }
-         }
-
-         stage('C'){
+    stages {
+        stage ('TEST_1') {
             when {
-                expression {
-                stageA == false
-                 }
+                branch 'master'
             }
-	      steps{
-	        echo 'when stage A is failed'
-                echo 'Stage C is running'
-              }
-         }
-    }
+            steps {
+                echo "this is TEST_1 stage Running"   
+            }
+        }
+        stage ('TEST_2') {
+            when {
+                branch 'master'
+            }
+            steps {
+                sh'''
+                echo "this is TEST_2 stage Running "
+                '''
+            }
+        }
+       
+    }  
+    
 }
+      
+
+         
