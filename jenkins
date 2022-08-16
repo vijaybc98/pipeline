@@ -18,24 +18,20 @@ pipeline {
 	               agent { label 'master' }
 	                 steps {
 			  sh'''
-			  when {
-	                   expression{stage_AResult: 'SUCCESS'}
-	                    }
+			  if{expression{stage_AResult: 'SUCCESS'}
 			    '''
-                       echo "this is stage_B" 
-	                }
-	            }
+                           echo "this is stage_B" 
+	                  }
+	             }
                   stage('stage_C') {
 		    agent { label 'slave1' } 
 	            steps {
 		     sh'''
-		     when {
-	              expression{stage_AResult: 'FAILURE'}
-	              }
-		      '''
+	              if{expression{stage_AResult: 'FAILURE'}
+	              '''
                      echo "this is stage_C" 
-	          }
-	        }
+	            }
+	         }
 	      }
 	    }
 	 }
