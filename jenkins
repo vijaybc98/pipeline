@@ -13,25 +13,29 @@ pipeline {
 			'''
 		      }
 		  }
-             }
- 	     stage('stage_B') {
-	      agent { label 'master' }
-	       when {
-	          expression{stage_AResult: 'SUCCESS'}
-	           }
-		   steps {
-                     echo "this is stage_B" 
-	          }
-	      }
-             stage('stage_C') {
-	      when {
-	          expression{stage_AResult: 'FAILURE'}
-	           }
-	         agent { label 'slave1' }
-	         steps {
+              }
+              stage(BC) {
+	      parallel {
+ 	           stage('stage_B') {
+	               agent { label 'master' }
+	               when {
+	                   expression{stage_AResult: 'SUCCESS'}
+	                    }
+		       steps {
+                       echo "this is stage_B" 
+	                }
+	            }
+                  stage('stage_C') {
+		    agent { label 'slave1' } 
+	             when {
+	             expression{stage_AResult: 'FAILURE'}
+	              }
+	              steps {
                      echo "this is stage_C" 
 	          }
+	        }
 	      }
+	    }
 	 }
       }
    
