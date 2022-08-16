@@ -1,38 +1,42 @@
-boolean testResult = true
 pipeline {
-  agent any
-   stages {
-    stage ('STAGE_A') {
-      steps {
-        script{
-          try{
-            echo " this is build stage" 
-            sh 'exit 1'  
-          }
-          catch(Exception e){testResult=false}
-       }
-      }
-    }  
-    stage ('STAGE_B') {
-        when {
-         expression {testResult == true }
-        }
-            steps {
-                  echo 'this is stage B Running'
-                  echo 'stage A is successfull'
-                }
-              }
-       stage ('STAGE_C') {
-        when {
-         expression {testResult == false }
-        } 
-            steps {
-                  echo 'this is stage C Running'
-                  echo 'stage A is failed'
-                }
+    agent any
+    stages {
+        stage ('BUILD') {
+            when {
+                branch 'master'
             }
-         } 
-      }
+            steps {
+                echo "this is build stage"   
+            }
+        }
+        stage ('DEPLOY') {
+            when {
+                branch 'master'
+            }
+            steps {
+                sh'''
+                echo "this is deploy stage"
+                '''
+            }
+        }     
+        stage ('TEST1') {
+            when {
+                branch 'master'
+            }
+            steps {
+            echo "this is test1 stage" 
+            }
+          }  
+          stage ('TEST1') {
+            when {
+                branch 'master'
+            }
+            steps {
+            echo "this is test2 stage" 
+            }
+          }  
+      }       
+  }
       
 
          
