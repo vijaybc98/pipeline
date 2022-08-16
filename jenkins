@@ -15,18 +15,20 @@ pipeline {
     }  
     stage ('STAGE_B') {
         when {
-         expression {testPassed == true }
+         expression {testResult == true }
         }
             steps {
                   echo 'this is stage B Running'
+                  echo 'stage A is successfull'
                 }
               }
        stage ('STAGE_C') {
         when {
-         expression {testPassed == false }
+         expression {testResult == false }
         } 
             steps {
                   echo 'this is stage C Running'
+                  echo 'stage A is failed'
                 }
             }
          } 
