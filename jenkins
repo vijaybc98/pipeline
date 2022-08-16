@@ -19,7 +19,7 @@ pipeline {
                 '''
             }
         }     
-        stage ('TEST1') {
+        stage ('TEST_1') {
             when {
                 branch 'master'
             }
@@ -27,7 +27,7 @@ pipeline {
             echo "this is test1 stage" 
             }
           }  
-          stage ('TEST1') {
+          stage ('TEST_2') {
             when {
                 branch 'master'
             }
