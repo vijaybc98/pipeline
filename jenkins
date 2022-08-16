@@ -16,23 +16,23 @@ pipeline {
 	          parallel {
  	             stage('stage_B') {
 	               agent { label 'master' }
-	                  sh'''
+	                 steps {
+			  sh'''
 			  when {
 	                   expression{stage_AResult: 'SUCCESS'}
 	                    }
 			    '''
-		       steps {
                        echo "this is stage_B" 
 	                }
 	            }
                   stage('stage_C') {
 		    agent { label 'slave1' } 
-	           sh'''
+	            steps {
+		     sh'''
 		     when {
-	             expression{stage_AResult: 'FAILURE'}
+	              expression{stage_AResult: 'FAILURE'}
 	              }
 		      '''
-	              steps {
                      echo "this is stage_C" 
 	          }
 	        }
