@@ -1,43 +1,49 @@
-pipeline {
-	agent none
-	stages {
-            stage('stage_A') {
-		 agent { label 'master' }
-		  steps {
-		       echo "this is stage_A"
-		       sh '''
-		        #!/bin/bash
-		        pwd  
-			ls 
-			'''
-		      }
-		  }
-              stage(BC) {
-	          parallel {
- 	             stage('stage_B') {
-	               agent { label 'master' }
-	                 steps {
-			  sh'''
-			  if(expression{stage_AResult: 'SUCCESS'})
-			    '''
-                           echo "this is stage_B" 
-	                  }
-	             }
-                  stage('stage_C') {
-		    agent { label 'slave1' } 
-	            steps {
-		     sh'''
-	              if({expression{stage_AResult: 'FAILURE'})
-	              '''
-                     echo "this is stage_C" 
-	            }
-	         }
-	      }
-	    }
-	 }
-      }
-   
+boolean stageA=true
+pipeline{
+    agent any
+    parameters {
+        choice choices: ['success', 'fail'], description: 'set \'A\' stage status', name: 'sta_A'
+    }
 
-	
-	
-                 
+    stages{
+        stage('A'){
+            steps{
+            script{
+                try{
+                echo 'Stage A is Running'
+                if(sta_A == 'fail'){
+                    sh 'exit 1'
+                }else{
+                    sh 'exit 0'
+                }
+            }catch(Exception e){
+                echo 'Stage (A) Failed'
+                stageA=false
+               }
+            }
+          }
+        }
+
+        stage('B'){
+            when {
+                expression {
+                    stageA == true
+                }
+            }
+            steps{
+                echo 'Stage B is running'
+            }
+        }
+
+        stage('C'){
+            when {
+                expression {
+                    stageA == false
+                }
+            }
+	      steps{
+                echo 'Stage C is running'
+            }
+        }
+    }
+}
