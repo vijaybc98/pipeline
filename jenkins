@@ -4,7 +4,6 @@ pipeline {
             stage('stage_A') {
 		 agent { label 'master' }
 		  steps {
-		      catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 		       echo "this is stage_A"
 		       sh '''
 		        #!/bin/bash
@@ -16,12 +15,18 @@ pipeline {
 		  }
              }
  	     stage('stage_B') {
-	         agent { label 'master' }
-	         steps {
+	      agent { label 'master' }
+	       when {
+	          expression{stage_AResult: 'SUCCESS'}
+	           }
+		   steps {
                      echo "this is stage_B" 
 	          }
 	      }
              stage('stage_C') {
+	      when {
+	          expression{stage_AResult: 'FAILURE'}
+	           }
 	         agent { label 'slave1' }
 	         steps {
                      echo "this is stage_C" 
