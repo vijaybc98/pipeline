@@ -1,11 +1,11 @@
 pipeline {
 	agent none
 	stages {
-            stage('stage-A') {
+            stage('stage-a') {
 		 agent { label 'master' }
 		  steps {
-		      catchError(stage-AResult: 'SUCCESS', stageResult: 'FAILURE') {
-		       echo "this is stage-A"
+		      catchError(stage-aResult: 'SUCCESS', stageResult: 'FAILURE') {
+		       echo "this is stage-a"
 		       sh '''
 		        #!/bin/bash
 		        pwd  
@@ -15,16 +15,16 @@ pipeline {
 		      }
 		  }
              }
- 	     stage('stage-B') {
+ 	     stage('stage-b') {
 	         agent { label 'master' }
 	         steps {
-                     echo "this is stage-B" 
+                     echo "this is stage-b" 
 	          }
 	      }
-             stage('stage-C') {
+             stage('stage-c') {
 	         agent { label 'slave1' }
 	         steps {
-                     echo "this is stage-C" 
+                     echo "this is stage-c" 
 	          }
 	      }
 	 }
