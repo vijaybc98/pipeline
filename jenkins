@@ -11,14 +11,14 @@ pipeline{
             script{
                 try{
                 echo 'Stage A is Running'
-                if(sta_A == 'fail'){
+                if(sta_A == 'success'){
                     sh 'exit 1'
                 }else{
                     sh 'exit 0'
                 }
             }catch(Exception e){
-                echo 'Stage (A) Failed'
-                stageA=false
+                echo 'Stage (A) success'
+                stageA=true
                }
             }
           }
