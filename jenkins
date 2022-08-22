@@ -1,8 +1,9 @@
 boolean testResult = true
 pipeline {
-  agent any
+  agent none
    stages {
     stage ('STAGE_A') {
+     agent { label 'master' }
       steps {
         script{
           try{
@@ -14,6 +15,7 @@ pipeline {
       }
     }  
     stage ('STAGE_B') {
+    agent { label 'master' }
         when {
          expression {testResult == true }
         }
@@ -23,6 +25,7 @@ pipeline {
                 }
               }
        stage ('STAGE_C') {
+       agent { label 'master' }
         when {
          expression {testResult == false }
         } 
