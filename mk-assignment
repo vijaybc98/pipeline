@@ -1,0 +1,32 @@
+pipeline {
+  agent {label 'master1'}
+  parameters {
+    choice(choices: ['GCC','MAKE','WGET'], description: 'Select the stage you want to run', name: 'running_stage')
+  }
+   stages {
+    stage ('GCC') {
+    when {
+         expression { params.running_stage == 'GCC' }
+     }
+      steps {
+          sh 'docker run -it -d ubuntu:latest apt update -y && sudo apt-get install -y gcc'
+            }
+          }  
+    stage ('MAKE') {
+    when {
+         expression { params.running_stage == 'MAKE' }
+      }
+        steps {
+	      sh 'docker run -it -d ubuntu:latest apt update -y && sudo apt-get install -y make'
+                }
+              } 
+       stage ('WGET') {
+        when {
+         expression { params.running_stage == 'WGET' }
+        }
+        steps {
+	          sh 'docker run -it -d ubuntu:latest apt update -y && sudo apt-get install -y wget'
+                }
+              }
+         } 
+    }
