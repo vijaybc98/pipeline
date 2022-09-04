@@ -1,5 +1,5 @@
 pipeline {
-  agent {label 'master1'}
+  agent {label 'slave2'}
   parameters {
     choice(choices: ['GCC','MAKE','WGET'], description: 'Select the stage you want to run', name: 'running_stage')
   }
